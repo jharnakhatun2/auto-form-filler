@@ -17,6 +17,7 @@ export const Popup = () => {
     });
   }, []);
 
+  // Save data to storage
   const saveData = () => {
     chrome.storage.sync.set({ formData: { name, email, phone } }, () => {
       setMessage("Saved successfully! ✅");
