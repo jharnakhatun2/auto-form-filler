@@ -1,4 +1,8 @@
 {
+  "name": "Auto Form Filler",
+  "description": "Automatically fills forms",
+  "version": "1.0.0",
+  "{{chrome}}.version_name": "beta",
   "{{chrome}}.manifest_version": 3,
   "{{firefox}}.manifest_version": 2,
   "icons": {
@@ -9,13 +13,45 @@
     "128": "icon/128.png"
   },
   "{{chrome}}.action": {
-    "default_popup": "src/popup.html"
+    "default_icon": {
+      "16": "icon/16.png",
+      "32": "icon/32.png",
+      "48": "icon/48.png"
+    },
+    "default_popup": "src/popup.html",
+    "default_title": "Auto Form Filler"
   },
   "{{firefox}}.browser_action": {
+    "default_icon": {
+      "16": "icon/16.png",
+      "32": "icon/32.png"
+    },
+    "default_title": "Auto Form Filler",
     "default_popup": "src/popup.html"
   },
   "background": {
     "{{chrome}}.service_worker": "src/background.js",
-    "{{firefox}}.scripts": ["src/background.js"]
-  }
+    "{{firefox}}.scripts": [
+      "src/background.js"
+    ]
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabs",
+    "scripting"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "src/content.js"
+      ],
+      "css": [
+        "src/content/script.css"
+      ]
+    }
+  ]
 }
