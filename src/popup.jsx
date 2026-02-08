@@ -4,7 +4,7 @@ import { Popup } from "./popup/popup";
 import "./popup/popup.css";
 
 
-ReactDOM.createRoot(document.body).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Popup />
   </React.StrictMode>
