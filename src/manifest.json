@@ -53,5 +53,9 @@
         "src/content/script.css"
       ]
     }
-  ]
+  ],
+  "host_permissions": [
+        "https://*/*",
+        "http://*/*"
+    ]
 }

@@ -4,6 +4,7 @@ export const Popup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
 
   // Load saved data
   useEffect(() => {
@@ -17,10 +18,12 @@ export const Popup = () => {
   }, []);
 
   const saveData = () => {
-    chrome.storage.sync.set({
-      formData: { name, email, phone },
+    chrome.storage.sync.set({ formData: { name, email, phone } }, () => {
+      setMessage("Saved successfully! ✅");
+
+      // Clear message after 1 seconds
+      setTimeout(() => setMessage(""), 1000);
     });
-    alert("Saved!");
   };
 
   const fillForm = async () => {
@@ -81,8 +84,9 @@ export const Popup = () => {
           Fill Form
         </button>
       </div>
+      {message && (
+        <p className="text-green-600 text-sm mt-2 text-center">{message}</p>
+      )}
     </div>
-
-
   )
 }

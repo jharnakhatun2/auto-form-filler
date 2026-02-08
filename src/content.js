@@ -1,17 +1,28 @@
 chrome.runtime.onMessage.addListener((msg) => {
-  if (msg.action === "FILL_FORM") {
-    chrome.storage.sync.get(["formData"], (res) => {
-      const data = res.formData;
-      if (!data) return;
+    if (msg.action === "FILL_FORM") {
+        chrome.storage.sync.get(["formData"], (res) => {
+            const data = res.formData;
+            if (!data) return;
 
-      fillInput("input[name='name']", data.name);
-      fillInput("input[name='email']", data.email);
-      fillInput("input[name='phone']", data.phone);
-    });
-  }
+            fillReactInput("#name", data.name);
+            fillReactInput("#email", data.email);
+            fillReactInput(".PhoneInputInput", data.phone);
+        });
+    }
 });
 
-function fillInput(selector, value) {
-  const input = document.querySelector(selector);
-  if (input) input.value = value;
+function fillReactInput(selector, value) {
+    const input = document.querySelector(selector);
+    if (!input) {
+        console.log("Not found:", selector);
+        return;
+    }
+
+    const nativeSetter = Object.getOwnPropertyDescriptor(
+        window.HTMLInputElement.prototype,
+        "value"
+    ).set;
+
+    nativeSetter.call(input, value);
+    input.dispatchEvent(new Event("input", { bubbles: true }));
 }
